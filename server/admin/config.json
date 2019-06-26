@@ -1,0 +1,8 @@
+{
+    "app": {
+        "layouts": false,
+        "themes": false,
+        "languages": false,
+        "root": "/admin"
+    }
+}

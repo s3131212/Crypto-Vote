@@ -1,0 +1,564 @@
+{
+    "candidates": {
+        "slug": "candidates",
+        "table": {
+            "name": "candidates",
+            "pk": "id",
+            "verbose": "Candidates"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "name",
+                "verbose": "Name",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(128)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "photo",
+                "verbose": "Photo URL",
+                "control": {
+                    "text": true
+                },
+                "type": "text",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "description",
+                "verbose": "Description",
+                "control": {
+                    "text": true
+                },
+                "type": "text",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "vote_id",
+                "verbose": "Vote",
+                "control": {
+                    "select": true
+                },
+                "oneToMany": {
+                    "table": "votes",
+                    "pk": "id",
+                    "columns": [
+                        "title"
+                    ]
+                },
+                "type": "int(11)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "code",
+                "verbose": "Code / Number",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            }
+        ],
+        "mainview": {
+            "show": true
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": false
+        }
+    },
+    "elections": {
+        "slug": "elections",
+        "table": {
+            "name": "elections",
+            "pk": "id",
+            "verbose": "Elections"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "title",
+                "verbose": "Election Title",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(128)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "description",
+                "verbose": "Description",
+                "control": {
+                    "text": true
+                },
+                "type": "text",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "starttime",
+                "verbose": "Start Time",
+                "control": {
+                    "datetime": true
+                },
+                "type": "datetime",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "endtime",
+                "verbose": "End Time",
+                "control": {
+                    "datetime": true
+                },
+                "type": "datetime",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            }
+        ],
+        "mainview": {
+            "show": true
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": false,
+            "manyToOne": {
+                "votes": "election_id",
+                "tokens": "election_id"
+            }
+        }
+    },
+    "tokens": {
+        "slug": "tokens",
+        "table": {
+            "name": "tokens",
+            "pk": "id",
+            "verbose": "Tokens"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "token",
+                "verbose": "Token",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(128)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "election_id",
+                "verbose": "Election",
+                "control": {
+                    "select": true
+                },
+                "oneToMany": {
+                    "table": "elections",
+                    "pk": "id",
+                    "columns": [
+                        "title"
+                    ]
+                },
+                "type": "int(11)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "used",
+                "verbose": "used",
+                "control": {
+                    "text": true
+                },
+                "type": "tinyint(1)",
+                "allowNull": false,
+                "defaultValue": "0",
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            }
+        ],
+        "mainview": {
+            "show": true
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": false
+        }
+    },
+    "used_randstr": {
+        "slug": "used_randstr",
+        "table": {
+            "name": "used_randstr",
+            "pk": "id",
+            "verbose": "used_randstr"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "string",
+                "verbose": "string",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(64)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            }
+        ],
+        "mainview": {
+            "show": false
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": true
+        }
+    },
+    "vote_records": {
+        "slug": "vote_records",
+        "table": {
+            "name": "vote_records",
+            "pk": "id",
+            "verbose": "Vote Records"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "token",
+                "verbose": "Token",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(6)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "vote_id",
+                "verbose": "Vote",
+                "control": {
+                    "text": true
+                },
+                "oneToMany": {
+                    "table": "votes",
+                    "pk": "id",
+                    "columns": [
+                        "title"
+                    ]
+                },
+                "type": "int(11)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "candidate_id",
+                "verbose": "Candidate",
+                "control": {
+                    "text": true
+                },
+                "oneToMany": {
+                    "table": "candidates",
+                    "pk": "id",
+                    "columns": [
+                        "name"
+                    ]
+                },
+                "type": "int(11)",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            }
+        ],
+        "mainview": {
+            "show": false
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": true
+        }
+    },
+    "votes": {
+        "slug": "votes",
+        "table": {
+            "name": "votes",
+            "pk": "id",
+            "verbose": "Votes"
+        },
+        "columns": [
+            {
+                "name": "id",
+                "verbose": "id",
+                "control": {
+                    "text": true
+                },
+                "type": "int(11) unsigned",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": false
+                }
+            },
+            {
+                "name": "title",
+                "verbose": "Vote Title",
+                "control": {
+                    "text": true
+                },
+                "type": "varchar(128)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "description",
+                "verbose": "Description",
+                "control": {
+                    "text": true
+                },
+                "type": "text",
+                "allowNull": true,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            },
+            {
+                "name": "election_id",
+                "verbose": "Election",
+                "control": {
+                    "select": true
+                },
+                "oneToMany": {
+                    "table": "elections",
+                    "pk": "id",
+                    "columns": [
+                        "title"
+                    ]
+                },
+                "type": "int(11)",
+                "allowNull": false,
+                "defaultValue": null,
+                "listview": {
+                    "show": true
+                },
+                "editview": {
+                    "show": true
+                }
+            }
+        ],
+        "mainview": {
+            "show": true
+        },
+        "listview": {
+            "order": {},
+            "page": 100
+        },
+        "editview": {
+            "readonly": false,
+            "manyToOne": {
+                "candidates": "vote_id"
+            }
+        }
+    }
+}
