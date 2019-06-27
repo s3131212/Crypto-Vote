@@ -123,18 +123,18 @@ router.post('/signBallot', (req,res) => {
     }
     db.queryToken(req.body.token, req.body.electionid).then(results => {
         if(results.length > 0){
-            db.updateTokenToUsed(req.body.token).then(re => {
-                res.json(rsablind.sign(req.body.blinded, req.body.electionid));
-            }).catch(err =>{
-                res.send("Internal Server Error");
-                console.log(err);
-            })
+            return;
         }else{
             res.send("illegal token");
+            throw("illegal token");
         }
-    }).catch(err => {
-        res.send("Internal Server Error");
-        console.log(err);
+    }).then(db.updateTokenToUsed(req.body.token)).then(result => {
+        res.json(rsablind.sign(req.body.blinded, req.body.electionid));
+    }).then(db.deleteVoteRecordsByReceipt(req.body.token)).catch(err => {
+        if(err != "illegal token"){
+            res.send("Internal Server Error");
+            console.log(err);
+        }
     })
 });
 
@@ -173,6 +173,14 @@ router.post('/submitBallot', (req,res) => {
                     })
                 )
             })
+            promises.push(
+                db.insertToken(receipt, req.body.electionid)
+                .then(res => {
+                    // well... do nothing
+                }).catch(err => {
+                    console.log(err);
+                })
+            )
             Promise.all(promises).then(() => {
                 res.send(receipt);
             }).catch(err => {

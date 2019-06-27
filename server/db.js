@@ -90,7 +90,7 @@ function queryUsedRandStr(randstr){
 
 function queryVoteResultByVoteID(vote_id){
     return new Promise((resolve, reject) => {
-        pool.query('SELECT token, candidate_id FROM vote_records INNER JOIN (SELECT votes.id AS vote_id FROM votes INNER JOIN elections WHERE votes.id = ? AND elections.endtime < NOW() AND votes.election_id = elections.id) AS b WHERE vote_records.vote_id = b.vote_id ORDER BY vote_records.token;', vote_id,(err, rows, fields) => {
+        pool.query('SELECT receipt, candidate_id FROM vote_records INNER JOIN (SELECT votes.id AS vote_id FROM votes INNER JOIN elections WHERE votes.id = ? AND elections.endtime < NOW() AND votes.election_id = elections.id) AS b WHERE vote_records.vote_id = b.vote_id ORDER BY vote_records.receipt;', vote_id,(err, rows, fields) => {
             if (err) reject(err);
             else resolve(rows);
         });
@@ -115,11 +115,29 @@ function insertUsedRandStr(randstr){
     });
 }
 
-function insertVoteRecords(token, vote_id, candidate_id){
+function insertToken(token, election_id){
     return new Promise((resolve, reject) => {
-        pool.query('INSERT INTO vote_records (token, vote_id, candidate_id) VALUES (?, ?, ?);', [token, vote_id, candidate_id],(err, rows, fields) => {
+        pool.query('INSERT INTO tokens (token, election_id, used) VALUES (?, ? ,?);', [token, election_id, 0],(err, rows, fields) => {
             if (err) reject(err);
             else resolve(rows);
+        });
+    });
+}
+
+function insertVoteRecords(receipt, vote_id, candidate_id){
+    return new Promise((resolve, reject) => {
+        pool.query('INSERT INTO vote_records (receipt, vote_id, candidate_id) VALUES (?, ?, ?);', [receipt, vote_id, candidate_id],(err, rows, fields) => {
+            if (err) reject(err);
+            else resolve(rows);
+        });
+    });
+}
+
+function deleteVoteRecordsByReceipt(receipt){
+    return new Promise((resolve, reject) => {
+        pool.query('DELETE FROM vote_records WHERE receipt = ?;', receipt,(err, results) => {
+            if (err) reject(err);
+            else resolve(results);
         });
     });
 }
@@ -136,5 +154,7 @@ module.exports = {
     queryVoteResultByVoteID,
     updateTokenToUsed,
     insertUsedRandStr,
-    insertVoteRecords
+    insertToken,
+    insertVoteRecords,
+    deleteVoteRecordsByReceipt
 }

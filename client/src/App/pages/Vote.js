@@ -133,7 +133,7 @@ class Vote extends Component {
                     type="success"
                     show={this.state.showSuccess}
                     title="You have submitted your votes!"
-                    text={"Here's your receipt: " + this.state.modalMsg}
+                    text={"Here's your receipt: " + this.state.modalMsg + " , you can use this code as token to discard the original vote and vote again if you want."}
                     onConfirm={() => { this.setState({ showSuccess: false }); this.props.history.push('/'); }}
                     onEscapeKey={() => { this.setState({ showSuccess: false }); this.props.history.push('/'); }}
                     onOutsideClick={() => { this.setState({ showSuccess: false }); this.props.history.push('/'); }}

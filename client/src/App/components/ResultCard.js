@@ -101,7 +101,7 @@ class VoteCard extends Component {
                             <Table className="vote-table">
                                 <thead>
                                     <tr>
-                                        <th>Token</th>
+                                        <th>Receipt</th>
                                         <th>Vote for</th>
                                     </tr>
                                 </thead>
@@ -109,7 +109,7 @@ class VoteCard extends Component {
                                     {
                                         this.state.results.map((val, idx) => (
                                             <tr key={idx}>
-                                                <td>{val.token}</td>
+                                                <td>{val.receipt}</td>
                                                 <td>{ this.state.candidatesMap[val.candidate_id] }</td>
                                             </tr>
                                         ))
