@@ -99,7 +99,7 @@ function queryVoteResultByVoteID(vote_id){
 
 function updateTokenToUsed(token){
     return new Promise((resolve, reject) => {
-        pool.query('UPDATE tokens SET used = 0 WHERE token = ?;', token,(err, rows, fields) => {
+        pool.query('UPDATE tokens SET used = 1 WHERE token = ?;', token,(err, rows, fields) => {
             if (err) reject(err);
             else resolve(rows);
         });

@@ -11,7 +11,7 @@ class VoteCard extends Component {
             candidates: [],
             candidatesMap: {},
             results: [],
-            winner: -1,
+            winner: [],
             color: [],
             show: false
         };
@@ -29,12 +29,14 @@ class VoteCard extends Component {
         getVoteResult(this.props.info.id, data => {
             let frequency = {};
             let max = -1;
-            let winner = -1;
+            let winner = [];
             for(let i = 0; i < data.length; i++){
                 frequency[data[i].candidate_id] = (frequency[data[i].candidate_id] || 0) + 1;
                 if(frequency[data[i].candidate_id] > max){
                     max = frequency[data[i].candidate_id];
-                    winner = data[i].candidate_id;
+                    winner = [ data[i].candidate_id ];
+                }else if(frequency[data[i].candidate_id] == max){
+                    winner.push(data[i].candidate_id)
                 }
             }
 
@@ -76,12 +78,12 @@ class VoteCard extends Component {
                 <Row>
                     {
                         this.state.candidates.map((val, idx) => (
-                            <Col key={idx} className={(val.id === this.state.winner) ? "winner-container" : ""}>
+                            <Col key={idx} className={this.state.winner.includes(val.id) ? "winner-container" : ""}>
                                 <h3 className="text-center">
                                     <b className="text-danger">{val.code}</b> - {val.name}
                                 </h3>
                                 <h3 className="text-center">
-                                    <Badge color={(val.id === this.state.winner) ? "primary" : "secondary" }>
+                                    <Badge color={this.state.winner.includes(val.id) ? "primary" : "secondary" }>
                                         { this.state.results.filter(ele => val.id === ele.candidate_id).length }
                                     </Badge>
                                 </h3>
