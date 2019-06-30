@@ -48,7 +48,7 @@ let initServer = function (err, admin) {
 }
 
 let adminConfig = {
-    dpath: './admin/',
+    dpath: path.join(__dirname, '/admin'),
     config: adminConfigFile,
     settings: require('./admin/settings.json'),
     custom: require('./admin/custom.json'),
